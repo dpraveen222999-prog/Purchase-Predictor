@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Purchase Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="wrap">
+  <h1>Purchase Predictor</h1>
+  <p class="info">Best Model: {{ model_name }} | ROC-AUC: {{ auc }}</p>
+
+  <form method="post" class="card">
+    <label>Age</label>
+    <input type="number" name="age" required>
+
+    <label>Purchase Amount (USD)</label>
+    <input type="number" step="0.01" name="amt" required>
+
+    <label>Review Rating (1-5)</label>
+    <input type="number" step="0.1" min="1" max="5" name="rate" required>
+
+    <label>Previous Purchases</label>
+    <input type="number" name="prev" required>
+
+    <label>Discount Applied</label>
+    <select name="disc" required>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <label>Promo Code Used</label>
+    <select name="promo" required>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
+
+    <button type="submit">Predict</button>
+  </form>
+
+  {% if prediction %}
+  <div class="result">
+    <h2>Prediction: {{ prediction }}</h2>
+    <p>Confidence: {{ confidence }}</p>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>
